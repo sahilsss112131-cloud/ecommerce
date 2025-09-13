@@ -18,6 +18,18 @@ async function main() {
     },
   })
 
+  // Create admin user
+  const adminUser = await prisma.user.upsert({
+    where: { email: 'admin@example.com' },
+    update: {},
+    create: {
+      email: 'admin@example.com',
+      name: 'Admin User',
+      password: hashedPassword,
+      role: 'ADMIN',
+    },
+  })
+
   // Create categories
   const electronics = await prisma.category.upsert({
     where: { slug: 'electronics' },
